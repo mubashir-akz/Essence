@@ -1,0 +1,44 @@
+
+
+<div class="container " style="padding-top: 100px;">
+    <div class="row">
+        <a href='/admin/add-product' class="btn btn-success ml-auto mt-4">add products</a>
+
+
+        <div class="col-md-12 mt-3">
+            <div class="table-responsive">
+
+
+                <table id="mytable" class="table table-bordred table-striped">
+
+                    <thead>
+
+                        <th>image</th>
+                        <th>Title</th>
+                        <th>prize</th>
+                        <th>category</th>
+                        <th>description</th>
+                        <th>edit</th>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                        <tr>
+                            <td><img style="width: 50px;height:50px" src="/product-images/{{this._id}}.jpg" alt=""></td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.prize}}</td>
+                            <td>{{this.category}}</td>
+                            <td>{{this.description}}</td>
+                            <td><a href="/admin/delete-product?id={{this._id}}" class="btn btn-danger"
+                                    onclick="return confirm('are you sure to delete {{this.name}}')">delete</a>
+                                <a href="/admin/edit-products?id={{this._id}}" class="btn btn-info">Edit</a></td>
+
+                        </tr>
+                        {{/each}}
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

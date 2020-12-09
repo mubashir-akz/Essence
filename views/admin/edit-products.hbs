@@ -1,0 +1,38 @@
+<div class="row">
+<div class="p-5 col-md-8">
+<h2>Edit products</h2>
+<br>
+<br>
+<form action="/admin/edit-products/{{product._id}}" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="">Product name</label>
+    <input type="text" class="form-control" name="name" value="{{product.name}}">
+  </div>
+  <div class="form-group">
+    <label for="">Prize </label>
+    <input type="number" class="form-control" name="prize" value="{{product.prize}}">
+  </div>
+  <div class="form-group">
+    <label for="">Description</label>
+        <input type="text-area" class="form-control" name="description" value="{{product.description}}">
+
+  </div>
+  <img src="/product-images/{{product._id}}.jpg" alt="" style="width:100px; height:auto" id="imgView">
+  <div class="form-group">
+    <label for="">Example file input</label>
+    <input type="file" name="image" class="form-control-file" onchange="viewImage(event)">
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Submit</button>
+</form> 
+</div>
+<div class="col-md-4 mt-5 p-5">
+    <img src="https://booster.io/wp-content/uploads/product-add-to-cart-e1438362099361.png" style="width: 350px; height:360px" alt="">
+</div>
+</div>
+
+<script>
+    function viewImage(event){
+        document.getElementById('imgView').src=URL.createObjectURL(event.target.files[0])
+    }
+</script>

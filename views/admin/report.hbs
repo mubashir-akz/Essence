@@ -1,0 +1,141 @@
+<div class="main w-75 ml-4 ">
+    <div class="container mx-auto bg-light ">
+        <h1 class="text-center" style="text-decoration: underline;">Sales report</h1>
+        <label for="chooseoption">Choose your option :</label>
+        <select class="form-control form-control-sm" id="chooseoption" onchange="optionSelected(this.value)">
+            <option selected>Select</option>
+            <option value="today">today</option>
+            <option value="yesterday">Yesterday</option>
+            <option value="lastWeek">Last week</option>
+            <option value="lastMonth">Last Month</option>
+            <option value="custom">Custom date</option>
+        </select>
+        <div id="custom" style="display: none;">
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fromdate">From :</label>
+                        <input type="date" class="form-control" id="fromdate">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="todate">To :</label>
+                        <input type="date" class="form-control" id="todate">
+                    </div>
+                </div>
+                <button id="customClicked" class="btn btn-dark mb-3" style="margin-left: 1em;">Submit</button>
+            </div>
+            <div id="nodata" style="display: none;" class="mt-5">
+                <h2 class="text-center">Sorry ..No data is found for the selected date</h2>
+            </div>
+        </div>
+        <div id="nodata" style="display: none;" class="mt-5">
+            <h2 class="text-center">Sorry ..No data is found for the selected date</h2>
+        </div>
+        <section id="tableData" style="display: none;">
+            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Date</th>
+                        <th>total</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Payment</th>
+                        <th class="text-center">User Id</th>
+                    </tr>
+                </thead>
+                <tbody id="totalorders">
+
+
+                </tbody>
+            </table>
+            {{!-- <button class="btn btn-dark mt-3" id="btnExport">Export as PDF</button> --}}
+        </section>
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+{{!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+{{!-- date = moment().subtract(1, 'days').format('DD/MM/YYYY')  --}}
+
+<script>
+    const total_orders = document.getElementById('totalorders');
+    const table = document.getElementById('tableData');
+    const noData  =document.getElementById('nodata')
+    var option = document.getElementById('chooseoption').value
+    function optionSelected(data) {
+        if (data != 'custom') {
+            $.ajax({
+                url: '/admin/filter',
+                data: {
+                    data
+                },
+                method: 'post',
+                success: (response) => {
+                    if (response.length > 0) {
+                        table.style.display = 'block';
+                        markup = generateallorderMarkup(response);
+                        total_orders.innerHTML = markup;
+                    } else {
+                        table.style.display = 'none';
+                        noData.style.display = 'block';
+                    }
+                }
+            })
+        } else {
+            table.style.display = 'none';
+            document.getElementById('custom').style.display = 'block';
+            document.getElementById('customClicked').addEventListener('click', () => {
+                const fromDate = document.getElementById('fromdate').value;
+                const toDate = document.getElementById('todate').value;
+                $.ajax({
+                    url: '/admin/custom',
+                    data: { fromDate, toDate },
+                    method: 'post',
+                    success: (response) => {
+                        if (response.length > 0) {
+                            table.style.display = 'block';
+                            markup = generateallorderMarkup(response);
+                            total_orders.innerHTML = markup;
+                        } else {
+                            table.style.display = 'none';
+                            noData.style.display = 'block';
+                        }
+
+                    }
+                })
+
+
+                axios.post('/admin/reportCustom', dates).then(res => {
+                    datas = res.data;
+                    if (datas.length > 0) {
+                        table.style.display = 'block';
+                        markup = generateallorderMarkup(datas);
+                        total_orders.innerHTML = markup;
+                    } else {
+                        table.style.display = 'none';
+                        noData.style.display = 'block';
+                    }
+
+                })
+            })
+
+        }
+    }
+    function generateallorderMarkup(datas) {
+        return datas.map(data => {
+            if (data != null) {
+                return `
+            <tr>
+                <td>${data.date}</td>
+                <td>$${data.total}</td>
+                <td>${data.status}</td>
+                <td>${data.paymentMethod}</td>
+                <td>${data.userId}</td>
+            </tr>`
+            }
+        }).join('')
+    }
+
+</script>
