@@ -276,7 +276,7 @@
 
 									<a class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 										{{this.name}}
-									</a>	
+									</a>
 									{{#if this.off}}
 									<span class="badge badge-info">{{this.off}}%</span>
 									{{/if}}
@@ -290,7 +290,6 @@
 									{{/if}}
 								</span>
 							</div>
-							{{#if cart}}
 							<div class="block2-txt-child2 flex-r p-t-3">
 								<a class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" id=""
 									onclick="addtocart('{{this._id}}')">
@@ -300,7 +299,6 @@
 										src="images/icons/icon-heart-02.png" alt="ICON">
 								</a>
 							</div>
-							{{/if}}
 						</div>
 					</div>
 				</div>
@@ -341,42 +339,6 @@
 
 	<script>
 
-		$(document).ready(function () {
-
-			$('.js-addwish-b2').on('click', function (e) {
-				e.preventDefault();
-			});
-
-			$('.js-addwish-b2').each(function () {
-				var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-				$(this).on('click', function () {
-					swal(nameProduct, "is added to Cart !", "success");
-
-					$(this).addClass('js-addedwish-b2');
-					$(this).off('click');
-				});
-			});
-
-			$('.js-addwish-detail').each(function () {
-				var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-				$(this).on('click', function () {
-					swal(nameProduct, "is added to Cart !", "success");
-
-					$(this).addClass('js-addedwish-detail');
-					$(this).off('click');
-				});
-			});
-
-			/*---------------------------------------------*/
-
-			$('.js-addcart-detail').each(function () {
-				var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
-				$(this).on('click', function () {
-					swal(nameProduct, "is added to cart !", "success");
-				});
-			});
-		});
 
 	</script>
 	<!--===============================================================================================-->
@@ -390,9 +352,46 @@
 				},
 				method: 'post',
 				success: (response) => {
-					if(response.status){
-					console.log(response.cartcount)
-					document.getElementById('cartCount').innerHTML = response.cartcount
+					if (response.status) {
+						$(document).ready(function () {
+
+							$('.js-addwish-b2').on('click', function (e) {
+								e.preventDefault();
+							});
+
+							$('.js-addwish-b2').each(function () {
+								var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+								$(this).on('click', function () {
+									swal(nameProduct, "is added to Cart !", "success");
+
+									$(this).addClass('js-addedwish-b2');
+									$(this).off('click');
+								});
+							});
+
+							$('.js-addwish-detail').each(function () {
+								var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+								$(this).on('click', function () {
+									swal(nameProduct, "is added to Cart !", "success");
+
+									$(this).addClass('js-addedwish-detail');
+									$(this).off('click');
+								});
+							});
+
+							/*---------------------------------------------*/
+
+							$('.js-addcart-detail').each(function () {
+								var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+								$(this).on('click', function () {
+									swal(nameProduct, "is added to cart !", "success");
+								});
+							});
+						});
+
+						console.log(response.cartcount)
+						document.getElementById('cartCount').innerHTML = response.cartcount
 					} else {
 						location.href = '/signin'
 					}

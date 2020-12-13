@@ -64,7 +64,7 @@ router.get("/", async (req, res) => {
         user: true,
         products,
         cart:req.session,
-        use: req.session.user,
+        users: req.session.user,
         cartcount,
         categories,
         title: "Essence",
@@ -330,10 +330,9 @@ router.get("/orders", verifyLogin, async (req, res) => {
   });
 });
 
-router.get("/abcd/:id", async (req, res) => {
+router.get("/OrderedProducts/:id", async (req, res) => {
   const { user } = req.session;
-
-  let products = await userHelpers.getOrderProducts(req.params.user._id);
+  let products = await userHelpers.getOrderProducts(req.params.id);
   // let quantity = products[0].quantity;
   // let product = products[0].product;
   var categories = await productHelpers.getCat();

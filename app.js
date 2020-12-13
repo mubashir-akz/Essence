@@ -9,6 +9,7 @@ const usersRouter = require('./routes/users');
 const adminRouter = require('./routes/admin');
 const cors = require('cors')
 const app = express();
+const secret = require('./config/secret')
 
 app.use(cors({
   "origin": "*",
@@ -18,10 +19,8 @@ app.use(cors({
 }))
 var request = require('request');
 
-var CLIENT =
-  'AUJoKVGO3q1WA1tGgAKRdY6qx0qQNIQ6vl6D3k7y64T4qh5WozIQ7V3dl3iusw5BwXYg_T5FzLCRguP8';
-var SECRET =
-  'EOw8LNwDhM7esrQ3nHfzKc7xiWnJc83Eawln4YLfUgivfx1LGzu9Mj0F5wlarilXDqdK9Q5aHVo-VGjJ';
+var CLIENT = secret.paypalClient
+var SECRET = secret.paypalSecret
 var PAYPAL_API = 'https://api-m.sandbox.paypal.com';
 const db = require('./config/connection');
 // view engine setup

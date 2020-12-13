@@ -1,11 +1,10 @@
 const mongoClient = require("mongodb").MongoClient;
-
+const secret = require('../config/secret')
 const state = {
   db: null,
 };
 module.exports.connect = function (done) {
-  const url =
-    "mongodb+srv://mubashir:MXfiq5n5ThtTjLtC@cluster0.qamji.mongodb.net/essence?retryWrites=true&w=majority";
+  const url = secret.dbURL
   const dbname = "Essence";
 
   mongoClient.connect(url, { useUnifiedTopology: true }, (err, data) => {
