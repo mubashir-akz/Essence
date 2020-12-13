@@ -290,6 +290,7 @@
 									{{/if}}
 								</span>
 							</div>
+							{{#if cart}}
 							<div class="block2-txt-child2 flex-r p-t-3">
 								<a class="btn-addwish-b2 dis-block pos-relative js-addwish-b2" id=""
 									onclick="addtocart('{{this._id}}')">
@@ -299,6 +300,7 @@
 										src="images/icons/icon-heart-02.png" alt="ICON">
 								</a>
 							</div>
+							{{/if}}
 						</div>
 					</div>
 				</div>
@@ -381,7 +383,6 @@
 	<script src="/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script>
 		function addtocart(userId) {
-			console.log('lo')
 			$.ajax({
 				url: '/add-to-cart',
 				data: {
@@ -389,9 +390,12 @@
 				},
 				method: 'post',
 				success: (response) => {
-
+					if(response.status){
 					console.log(response.cartcount)
 					document.getElementById('cartCount').innerHTML = response.cartcount
+					} else {
+						location.href = '/signin'
+					}
 				}
 			})
 		}

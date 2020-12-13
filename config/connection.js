@@ -6,7 +6,7 @@ const state = {
 module.exports.connect = function (done) {
   const url =
     "mongodb+srv://mubashir:MXfiq5n5ThtTjLtC@cluster0.qamji.mongodb.net/essence?retryWrites=true&w=majority";
-  const dbname = "essence";
+  const dbname = "Essence";
 
   mongoClient.connect(url, { useUnifiedTopology: true }, (err, data) => {
     if (err) return done(err);

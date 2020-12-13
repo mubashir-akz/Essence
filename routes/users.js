@@ -1,5 +1,5 @@
 const express = require("express");
-const noty = require("noty"); //noty 
+const noty = require("noty"); //noty
 const router = express.Router();
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
@@ -34,7 +34,7 @@ app.use(express.json());
 const verifyLogin = (req, res, next) => {
   if (req.session.user) {
     next();
-  } else {    
+  } else {
     res.redirect("/signin");
   }
 };
@@ -44,20 +44,32 @@ router.get("/", async (req, res) => {
   const { user } = req.session;
   var categories = await productHelpers.getCat();
 
-  let cartcount = null;
+  let cartcount = 0;
   if (user) {
     cartcount = await userHelpers.getCartCount(req.session.user._id);
   }
   productHelpers.getAllProduct().then((products) => {
-    res.render("user/index", {
-      user: true,
-      products,
-      users: req.session.user,
-      use:req.session.user,
-      cartcount,
-      categories,
-      title: "Essence",
-    });
+    console.log(req.session.user);
+    if (req.session.user == null) {
+      res.render("user/index", {
+        user: true,
+        products,
+        use: req.session.user,
+        cartcount,
+        categories,
+        title: "Essence",
+      });
+    } else {
+      res.render("user/index", {
+        user: true,
+        products,
+        cart:req.session,
+        use: req.session.user,
+        cartcount,
+        categories,
+        title: "Essence",
+      });
+    }
   });
 });
 router.get("/signin", async (req, res) => {
@@ -173,13 +185,18 @@ router.get("/cart", verifyLogin, async (req, res) => {
 router.post("/add-to-cart", verifyLogin, async (req, res) => {
   const { user } = req.session;
   let cartcount = 0;
-
-  userHelpers.addToCart(req.body.user, req.session.user._id).then(async () => {
-    if (user) {
-      cartcount = await userHelpers.getCartCount(req.session.user._id);
-    }
-    res.json({ status: true, cartcount });
-  });
+  if (req.session.user) {
+    userHelpers
+      .addToCart(req.body.user, req.session.user._id)
+      .then(async () => {
+        if (user) {
+          cartcount = await userHelpers.getCartCount(req.session.user._id);
+        }
+        res.json({ status: true, cartcount });
+      });
+  } else {
+    res.json({ status: false });
+  }
 });
 
 router.get("/contactus", verifyLogin, async (req, res) => {
