@@ -11,17 +11,18 @@ var request = require("request");
 const cors = require("cors");
 const Noty = require("noty");
 const cogoToast = require("cogo-toast");
+const secret = require('../config/secret')
 app.use(cors());
 var CLIENT =
-  "AUJoKVGO3q1WA1tGgAKRdY6qx0qQNIQ6vl6D3k7y64T4qh5WozIQ7V3dl3iusw5BwXYg_T5FzLCRguP8";
+  secret.paypalClient;
 var SECRET =
-  "EOw8LNwDhM7esrQ3nHfzKc7xiWnJc83Eawln4YLfUgivfx1LGzu9Mj0F5wlarilXDqdK9Q5aHVo-VGjJ";
+  secret.paypalSecret;
 var PAYPAL_API = "https://api-m.sandbox.paypal.com";
 router.use(
   session({
     name: "rfddrhvf",
     resave: false,
-    store: new MongoStore({ url: "mongodb://localhost:27017/shopping" }),
+    store: new MongoStore({ url: 'mongodb://localhost:27017/shopping' }),
     saveUninitialized: false,
     secret: "secret",
     cookie: {

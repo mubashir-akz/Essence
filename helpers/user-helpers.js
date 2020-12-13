@@ -6,6 +6,7 @@ const moment = require("moment");
 const Razorpay = require("razorpay");
 var paypal = require("paypal-rest-sdk");
 const { resolve } = require("path");
+const secret = require('../config/secret')
 var instance = new Razorpay({
   key_id: "rzp_test_jsL70upb6RKmN0",
   key_secret: "xXiH38Uft4i4IXnfiJZhWiiG",
@@ -13,9 +14,9 @@ var instance = new Razorpay({
 paypal.configure({
   mode: "sandbox", //sandbox or live
   client_id:
-    "AdIazLQnx_vhEv7CcW1voXsCxC7HQHFG4pxYy3Fl1aqSWEGtDL07bXSxGFRqIp1iuFuLG06VpEltRI1z", // please provide your client id here
+    secret.razorpayClient, // please provide your client id here
   client_secret:
-    "ECYopHgkVUZyWP8ek6Ii0POuI9-kfbuks6sFioNbZtsitMAyWPqWqHcSCqzf1bpZ9J20WN-OroNk1pbj", //// provide your client secret here
+    secret.razorpaySecret, //// provide your client secret here
 });
 
 module.exports = {
