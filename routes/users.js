@@ -11,13 +11,7 @@ var request = require("request");
 const cors = require("cors");
 const Noty = require("noty");
 const cogoToast = require("cogo-toast");
-const secret = require('../config/secret')
 app.use(cors());
-var CLIENT =
-  secret.paypalClient;
-var SECRET =
-  secret.paypalSecret;
-var PAYPAL_API = "https://api-m.sandbox.paypal.com";
 router.use(
   session({
     name: "rfddrhvf",

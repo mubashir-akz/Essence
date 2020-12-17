@@ -1,6 +1,5 @@
 require('dotenv').config()
 const mongoClient = require("mongodb").MongoClient;
-const secret = require('../config/secret')
 const state = {
   db: null,
 };

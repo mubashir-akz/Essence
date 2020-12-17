@@ -12,7 +12,6 @@ const usersRouter = require('./routes/users');
 const adminRouter = require('./routes/admin');
 const cors = require('cors')
 const app = express();
-const secret = require('./config/secret')
 app.use(cors({
   "origin": "*",
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",

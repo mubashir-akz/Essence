@@ -6,7 +6,6 @@ const moment = require("moment");
 const Razorpay = require("razorpay");
 var paypal = require("paypal-rest-sdk");
 const { resolve } = require("path");
-const secret = require('../config/secret')
 var instance = new Razorpay({
   key_id: "rzp_test_jsL70upb6RKmN0",
   key_secret: "xXiH38Uft4i4IXnfiJZhWiiG",
