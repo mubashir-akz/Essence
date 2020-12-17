@@ -1,3 +1,6 @@
+require('dotenv').config({
+  path: ''
+})
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -10,7 +13,6 @@ const adminRouter = require('./routes/admin');
 const cors = require('cors')
 const app = express();
 const secret = require('./config/secret')
-
 app.use(cors({
   "origin": "*",
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -19,8 +21,8 @@ app.use(cors({
 }))
 var request = require('request');
 
-var CLIENT = secret.paypalClient
-var SECRET = secret.paypalSecret
+var CLIENT = process.env.PAYPAL_CLIENT
+var SECRET = process.env.PAYPAL_SECRET
 var PAYPAL_API = 'https://api-m.sandbox.paypal.com';
 const db = require('./config/connection');
 // view engine setup

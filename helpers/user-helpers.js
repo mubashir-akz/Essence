@@ -13,10 +13,9 @@ var instance = new Razorpay({
 });
 paypal.configure({
   mode: "sandbox", //sandbox or live
-  client_id:
-    secret.razorpayClient, // please provide your client id here
+  client_id: process.env.RAZORPAY_CLIENT,
   client_secret:
-    secret.razorpaySecret, //// provide your client secret here
+  process.env.RAZORPAY_SECRET //// provide your client secret here
 });
 
 module.exports = {

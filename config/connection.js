@@ -1,10 +1,11 @@
+require('dotenv').config()
 const mongoClient = require("mongodb").MongoClient;
 const secret = require('../config/secret')
 const state = {
   db: null,
 };
 module.exports.connect = function (done) {
-  const url = secret.dbURL
+  const url = process.env.DB_CONFIG
   const dbname = "Essence";
 
   mongoClient.connect(url, { useUnifiedTopology: true }, (err, data) => {
